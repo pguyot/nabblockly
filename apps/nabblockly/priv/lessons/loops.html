@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>Nabblockly</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <script src="/js/acorn_interpreter.js"></script>
+  <script src="/js/blockly_compressed.js"></script>
+  <script src="/js/blocks_compressed.js"></script>
+  <script src="/js/javascript_compressed.js"></script>
+  <script src="/js/msg/js/fr.js"></script>
+  <script src="/js/wait_block.js"></script>
+  <script src="/js/nabaztag_blocks.js"></script>
+  <script src="/js/jquery-3.4.1.min.js"></script>
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="/fonts/raleway.css" rel="stylesheet" type="text/css">
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="/css/normalize.css">
+  <link rel="stylesheet" href="/css/skeleton.css">
+  <link rel="stylesheet" href="/css/nabaztag.css">
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="/images/favicon.png">
+
+</head>
+<body>
+
+  <!-- Modal
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <div class="modal" id="nextStepModal">
+    <div class="container modal-content">
+      <div class="row">
+        <div class="offset-by-two eight columns">
+          <div class="modal-inner">
+            <div class="modal-header">
+              <h4>Bravo ! <img src="/images/smileys/nabzjump.gif" /></h4>
+            </div>
+            <div class="modal-footer">
+              <button class="next-step">Continuer</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="redoModal">
+    <div class="container modal-content">
+      <div class="row">
+        <div class="offset-by-two eight columns">
+          <div class="modal-inner">
+            <div class="modal-header">
+              <span class="close">&times;</span>
+              <h4>Ce n'est pas encore ça ! <img src="/images/smileys/nabzdrunk.gif" /></h4>
+            </div>
+            <div class="modal-body">
+              <p class="message"></p>
+              <p>Essayez encore.</p>
+            </div>
+            <div class="modal-footer">
+              <button class="close">OK</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <div class="container">
+    <script>
+      var steps = [];
+    </script>
+    <div class="row">
+      <div class="twelve columns" style="margin-top: 5%" id="stepsNav">
+      </div>
+    </div>
+
+    <div class="row step-text" id="step1-text" style="display: none">
+      <div class="twelve columns" style="margin-top: 10%">
+        <h2>On commence !</h2>
+        <p>Pour ce premier exercice, faites clignoter le nez du lapin 5 fois.</p>
+      </div>
+    </div>
+
+    <xml xmlns="https://developers.google.com/blockly/xml" id="step1-toolbox" style="display: none">
+      <block type="blink_nose_fuchsia"></block>
+    </xml>
+
+    <xml xmlns="https://developers.google.com/blockly/xml" id="step1-startBlocks" style="display: none">
+    </xml>
+    
+    <script>
+      steps.push({
+        id: 'step1',
+        validation: function (actions) {
+            if (actions.length < 5) {
+              return {"result": "error", "message": "Faites clignoter le nez <b>5 fois</b>"};
+            }
+            if (actions.length > 5) {
+              return {"result": "error", "message": "Faites clignoter le nez <b>exactement</b> 5 fois"};
+            }
+            return {"result": "ok"};
+        }
+      });
+    </script>
+
+    <div class="row step-text" id="step2-text" style="display: none">
+      <div class="twelve columns" style="margin-top: 10%">
+        <h2>Les boucles répéter</h2>
+        <p>Même objectif que précédemment, faites clignoter le nez du lapin 5 fois, mais en utilisant une boucle répéter.</p>
+      </div>
+    </div>
+
+    <xml xmlns="https://developers.google.com/blockly/xml" id="step2-toolbox" style="display: none">
+      <block type="controls_repeat_ext">
+        <value name="TIMES">
+          <block type="math_number">
+            <field name="NUM">10</field>
+          </block>
+        </value>
+      </block>
+      <block type="blink_nose_fuchsia"></block>
+    </xml>
+
+    <xml xmlns="https://developers.google.com/blockly/xml" id="step2-startBlocks" style="display: none">
+    </xml>
+    
+    <script>
+      steps.push({
+        id: 'step2',
+        validation: function (actions) {
+            if (actions.length < 5) {
+              return {"result": "error", "message": "Faites clignoter le nez <b>5 fois</b>"};
+            }
+            if (actions.length > 5) {
+              return {"result": "error", "message": "Faites clignoter le nez <b>exactement</b> 5 fois"};
+            }
+            if (workspace.getAllBlocks().length != 3) {
+              return {"result": "error", "message": "Essayez avec une boucle répéter"};
+            }
+            return {"result": "ok"};
+        }
+      });
+    </script>
+
+    <div class="row step-text" id="step3-text" style="display: none">
+      <div class="twelve columns" style="margin-top: 10%">
+        <h2>Avec du son</h2>
+        <p>Faites clignoter le ventre du lapin 3 fois, en jouant une note à chaque fois, toujours la même.</p>
+      </div>
+    </div>
+
+    <xml xmlns="https://developers.google.com/blockly/xml" id="step3-toolbox" style="display: none">
+      <block type="controls_repeat_ext">
+        <value name="TIMES">
+          <block type="math_number">
+            <field name="NUM">10</field>
+          </block>
+        </value>
+      </block>
+      <block type="blink_middle"></block>
+      <block type="play_note">
+          <value name="SOUND">
+            <block type="field_dropdown">
+              <field name="FIELDNAME">1noteA4</field>
+            </block>
+          </value>
+      </block>
+    </xml>
+
+    <xml xmlns="https://developers.google.com/blockly/xml" id="step3-startBlocks" style="display: none">
+    </xml>
+    
+    <script>
+      steps.push({
+        id: 'step3',
+        validation: function (actions) {
+            var nbBlink = 0;
+            var nbNotes = 0;
+            actions.forEach(function(item) {
+              if (item.action == "ledBlink") {
+                nbBlink = nbBlink + 1;
+              } else if (item.action == "playSound") {
+                nbNotes = nbNotes + 1;
+              }
+              if (nbBlink - nbNotes > 1 || nbBlink - nbNotes < -1) {
+                return {"result": "error", "message": "Il faut faire clignoter et jouer une note en alternance"};
+              }
+            });
+            if (nbBlink != 3 || nbNotes != 3) {
+              return {"result": "error", "message": "Il faut faire clignoter et jouer une note 3 fois"};
+            }
+            if (workspace.getAllBlocks().length != 4) {
+              return {"result": "error", "message": "Essayez avec une boucle répéter"};
+            }
+            return {"result": "ok"};
+        }
+      });
+    </script>
+
+    <div class="row step-text" id="step4-text" style="display: none">
+      <div class="twelve columns" style="margin-top: 10%">
+        <h2>Le nez et le milieu</h2>
+        <p>Faites clignoter 7 fois le nez puis 4 fois le milieu. Choisissez les couleurs que vous voulez !</p>
+      </div>
+    </div>
+
+    <xml xmlns="https://developers.google.com/blockly/xml" id="step4-toolbox" style="display: none">
+      <block type="controls_repeat_ext">
+        <value name="TIMES">
+          <block type="math_number">
+            <field name="NUM">10</field>
+          </block>
+        </value>
+      </block>
+      <block type="blink_nose"></block>
+      <block type="blink_middle"></block>
+    </xml>
+
+    <xml xmlns="https://developers.google.com/blockly/xml" id="step4-startBlocks" style="display: none">
+    </xml>
+    
+    <script>
+      steps.push({
+        id: 'step4',
+        validation: function (actions) {
+          var nbNose = 0;
+          var nbMiddle = 0;
+          actions.forEach(function(item) {
+            if (item.action != "ledBlink") {
+              return {"result": "error", "message": "Faites clignoter le nez et le milieu"};
+            }
+            if (item.parameters[0] == 0) {
+              nbNose = nbNose + 1;
+            } else if (item.parameters[0] == 2) {
+              if (nbNose != 7) {
+                return {"result": "error", "message": "Faites clignoter le nez <b>7 fois</b> puis le milieu 4 fois"};
+              }
+              nbMiddle = nbMiddle + 1;
+            } else {
+              return {"result": "error", "message": "Faites clignoter le nez et le milieu"};
+            }
+          });
+          if (nbNose != 7) {
+            return {"result": "error", "message": "Faites clignoter le nez <b>7 fois</b> puis le milieu 4 fois"};
+          }
+          if (nbMiddle != 4) {
+            return {"result": "error", "message": "Faites clignoter le nez 7 fois puis le milieu <b>4 fois</b>"};
+          }
+          if (workspace.getAllBlocks().length != 6) {
+            return {"result": "error", "message": "Essayez avec des boucles répéter"};
+          }
+          return {"result": "ok"};
+        }
+      });
+    </script>
+
+    <div class="row step-text" id="step5-text" style="display: none">
+      <div class="twelve columns" style="margin-top: 10%">
+        <h2>L'oreille gauche</h2>
+        <p>Pour faire tourner une oreille complètement, il faut la faire tourner de 17 crans.</p>
+        <p>Allumez le nez, puis faites tourner l'oreille gauche d'un tour complet, et enfin éteignez le nez.</p>
+      </div>
+    </div>
+
+    <xml xmlns="https://developers.google.com/blockly/xml" id="step5-toolbox" style="display: none">
+      <block type="controls_repeat_ext">
+        <value name="TIMES">
+          <block type="math_number">
+            <field name="NUM">10</field>
+          </block>
+        </value>
+      </block>
+      <block type="turn_led_on">
+        <value name="LED">
+          <block type="field_dropdown">
+            <field name="LED">0</field>
+          </block>
+        </value>
+        <value name="COLOR">
+          <block type="field_colour">
+            <field name="COLOR">#00FF00</field>
+          </block>
+        </value>
+      </block>
+      <block type="turn_led_off">
+        <value name="LED">
+          <block type="field_dropdown">
+            <field name="FIELDNAME">NOSE</field>
+          </block>
+        </value>
+      </block>
+      <block type="move_left_ear_one_step"></block>
+    </xml>
+
+    <xml xmlns="https://developers.google.com/blockly/xml" id="step5-startBlocks" style="display: none">
+    </xml>
+    
+    <script>
+      steps.push({
+        id: 'step5',
+        validation: function (actions) {
+            if (actions.length == 0) {
+              return {"result": "error"};
+            }
+            if (actions[0].action != "led" || actions[0].parameters[0] != 0 || actions[0].parameters[1] == "black") {
+              return {"result": "error", "message": "Il faut commencer par allumer le nez"};
+            }
+            if (actions[actions.length - 1].action != "led" || actions[actions.length - 1].parameters[0] != 0 || actions[actions.length - 1].parameters[1] != "black") {
+              return {"result": "error", "message": "Il faut terminer par éteindre le nez"};
+            }
+            var nbSteps = 0;
+            actions.forEach(function(item) {
+              if (item.action == "ear") {
+                nbSteps = nbSteps + 1;
+              }
+            });
+            if (nbSteps != 17) {
+              return {"result": "error", "message": "Il faut faire tourner l'oreille d'<b>exactement 17 petits pas</b> pour faire un tour complet"};
+            }
+            if (workspace.getAllBlocks().length != 5) {
+              return {"result": "error", "message": "Essayez avec une boucle répéter"};
+            }
+            return {"result": "ok"};
+        }
+      });
+    </script>
+
+    <div class="row step-text" id="step6-text" style="display: none">
+      <div class="twelve columns" style="margin-top: 10%">
+        <h2>Les deux oreilles</h2>
+        <p>Pendant que la lumière au milieu du ventre est allumée, faites faire un tour complet aux deux oreilles en même temps.</p>
+      </div>
+    </div>
+
+    <xml xmlns="https://developers.google.com/blockly/xml" id="step6-toolbox" style="display: none">
+      <block type="controls_repeat_ext">
+        <value name="TIMES">
+          <block type="math_number">
+            <field name="NUM">10</field>
+          </block>
+        </value>
+      </block>
+      <block type="turn_led_on">
+        <value name="LED">
+          <block type="field_dropdown">
+            <field name="LED">0</field>
+          </block>
+        </value>
+        <value name="COLOR">
+          <block type="field_colour">
+            <field name="COLOR">#00FF00</field>
+          </block>
+        </value>
+      </block>
+      <block type="turn_led_off">
+        <value name="LED">
+          <block type="field_dropdown">
+            <field name="FIELDNAME">NOSE</field>
+          </block>
+        </value>
+      </block>
+      <block type="move_ear_one_step"></block>
+    </xml>
+
+    <xml xmlns="https://developers.google.com/blockly/xml" id="step6-startBlocks" style="display: none">
+    </xml>
+    
+    <script>
+      steps.push({
+        id: 'step6',
+        validation: function (actions) {
+            if (actions.length == 0) {
+              return {"result": "error"};
+            }
+            if (actions[0].action != "led" || actions[0].parameters[0] != 2 || actions[0].parameters[1] == "black") {
+              return {"result": "error", "message": "Il faut commencer par allumer le milieu du ventre"};
+            }
+            if (actions[actions.length - 1].action != "led" || actions[actions.length - 1].parameters[0] != 2 || actions[actions.length - 1].parameters[1] != "black") {
+              return {"result": "error", "message": "Il faut terminer par éteindre la lumière au milieu du ventre"};
+            }
+            var nbStepsLeft = 0;
+            var nbStepsRight = 0;
+            actions.forEach(function(item) {
+              if (item.action == "ear") {
+                if (item.parameters[0] == 0) {
+                  nbStepsLeft = nbStepsLeft + 1;
+                } else {
+                  nbStepsRight = nbStepsRight + 1;
+                }
+                if (nbStepsLeft - nbStepsRight > 1 || nbStepsLeft - nbStepsRight < -1) {
+                  return {"result": "error", "message": "Il faut faire tourner les oreilles en alternance"};
+                }
+              }
+            });
+            if (nbStepsLeft != 17 || nbStepsRight != 17) {
+              return {"result": "error", "message": "Il faut faire tourner les oreilles d'<b>exactement 17 petits pas</b> pour faire un tour complet"};
+            }
+            if (workspace.getAllBlocks().length != 6) {
+              return {"result": "error", "message": "Essayez avec une boucle répéter"};
+            }
+            return {"result": "ok"};
+        }
+      });
+    </script>
+
+    <div class="row step-text" id="demo1-text" style="display: none">
+      <div class="twelve columns" style="margin-top: 10%">
+        <h2>On commence à jouer <img src="/images/smileys/nabzturnaround.gif" /></h2>
+        <p>Bravo ! Maintenant, essayez de reproduire la petite danse.</p>
+        <p>Cliquez sur le bouton pour la voir.</p>
+        <button class="demo-button" onclick="playDemo1()">Jouer la danse</button>
+      </div>
+    </div>
+
+    <xml xmlns="https://developers.google.com/blockly/xml" id="demo1-toolbox" style="display: none">
+      <block type="controls_repeat_ext">
+        <value name="TIMES">
+          <block type="math_number">
+            <field name="NUM">10</field>
+          </block>
+        </value>
+      </block>
+      <block type="turn_led_on_simple_colors">
+        <value name="LED">
+          <block type="field_dropdown">
+            <field name="LED">0</field>
+          </block>
+        </value>
+        <value name="COLOR">
+          <block type="field_colour">
+            <field name="COLOR">blue</field>
+          </block>
+        </value>
+      </block>
+      <block type="turn_led_off">
+        <value name="LED">
+          <block type="field_dropdown">
+            <field name="FIELDNAME">NOSE</field>
+          </block>
+        </value>
+      </block>
+    </xml>
+
+    <xml xmlns="https://developers.google.com/blockly/xml" id="demo1-startBlocks" style="display: none">
+    </xml>
+    
+    <script>
+      function playDemo1() {
+        runDemoCode('for (var i = 0; i < 4; i++) { led(3,"red");waitForSeconds(0.5);led(3,"black");waitForSeconds(0.5);}');
+      }
+      steps.push({
+        id: 'demo1',
+        validation: function (actions) {
+          var demoActions = [
+            {"action":"led","parameters":[3,"red"]},
+            {"action":"led","parameters":[3,"black"]},
+            {"action":"led","parameters":[3,"red"]},
+            {"action":"led","parameters":[3,"black"]},
+            {"action":"led","parameters":[3,"red"]},
+            {"action":"led","parameters":[3,"black"]},
+            {"action":"led","parameters":[3,"red"]},
+            {"action":"led","parameters":[3,"black"]},
+          ];
+          return validateDemoActions(actions, demoActions, 4);
+        }
+      });
+    </script>
+
+    <div class="row step-text" id="demo2-text" style="display: none">
+      <div class="twelve columns" style="margin-top: 10%">
+        <h2>On avance</h2>
+        <p>Essayez de reproduire cette danse un peu plus complexe.</p>
+        <p>Cliquez sur le bouton pour la voir.</p>
+        <button class="demo-button" onclick="playDemo2()">Jouer la danse</button>
+      </div>
+    </div>
+
+    <xml xmlns="https://developers.google.com/blockly/xml" id="demo2-toolbox" style="display: none">
+      <block type="controls_repeat_ext">
+        <value name="TIMES">
+          <block type="math_number">
+            <field name="NUM">10</field>
+          </block>
+        </value>
+      </block>
+      <block type="turn_led_on_simple_colors">
+        <value name="LED">
+          <block type="field_dropdown">
+            <field name="LED">0</field>
+          </block>
+        </value>
+        <value name="COLOR">
+          <block type="field_colour">
+            <field name="COLOR">blue</field>
+          </block>
+        </value>
+      </block>
+      <block type="turn_led_off">
+        <value name="LED">
+          <block type="field_dropdown">
+            <field name="FIELDNAME">NOSE</field>
+          </block>
+        </value>
+      </block>
+    </xml>
+
+    <xml xmlns="https://developers.google.com/blockly/xml" id="demo2-startBlocks" style="display: none">
+    </xml>
+    
+    <script>
+      function playDemo2() {
+        runDemoCode('led(0,"red");waitForSeconds(0.5);led(1,"blue");waitForSeconds(0.5);led(1,"black");waitForSeconds(0.5);led(2,"blue");waitForSeconds(0.5);led(2,"black");waitForSeconds(0.5);led(3,"blue");waitForSeconds(0.5);led(3,"black");waitForSeconds(0.5);led(0,"black");');
+      }
+      steps.push({
+        id: 'demo2',
+        validation: function (actions) {
+          var demoActions = [
+            {"action":"led","parameters":[0,"red"]},
+            {"action":"led","parameters":[1,"blue"]},
+            {"action":"led","parameters":[1,"black"]},
+            {"action":"led","parameters":[2,"blue"]},
+            {"action":"led","parameters":[2,"black"]},
+            {"action":"led","parameters":[3,"blue"]},
+            {"action":"led","parameters":[3,"black"]},
+            {"action":"led","parameters":[0,"black"]}
+          ];
+          return validateDemoActions(actions, demoActions);
+        }
+      });
+    </script>
+
+    <div class="row step-text" id="demo3-text" style="display: none">
+      <div class="twelve columns" style="margin-top: 10%">
+        <h2>On se répète</h2>
+        <p>Identifiez ce qui se répète dans cette danse.</p>
+        <p>Cliquez sur le bouton pour la voir.</p>
+        <button class="demo-button" onclick="playDemo3()">Jouer la danse</button>
+      </div>
+    </div>
+
+    <xml xmlns="https://developers.google.com/blockly/xml" id="demo3-toolbox" style="display: none">
+      <block type="controls_repeat_ext">
+        <value name="TIMES">
+          <block type="math_number">
+            <field name="NUM">10</field>
+          </block>
+        </value>
+      </block>
+      <block type="turn_led_on_simple_colors">
+        <value name="LED">
+          <block type="field_dropdown">
+            <field name="LED">0</field>
+          </block>
+        </value>
+        <value name="COLOR">
+          <block type="field_colour">
+            <field name="COLOR">blue</field>
+          </block>
+        </value>
+      </block>
+      <block type="turn_led_off">
+        <value name="LED">
+          <block type="field_dropdown">
+            <field name="FIELDNAME">NOSE</field>
+          </block>
+        </value>
+      </block>
+    </xml>
+
+    <xml xmlns="https://developers.google.com/blockly/xml" id="demo3-startBlocks" style="display: none">
+    </xml>
+    
+    <script>
+      function playDemo3() {
+        runDemoCode('for (var i = 0; i < 3; i++) { led(1,"lime");waitForSeconds(0.3);led(1,"black");waitForSeconds(0.3);led(2,"lime");waitForSeconds(0.3);led(2,"black");waitForSeconds(0.3);led(3,"lime");waitForSeconds(0.5);led(3,"black");waitForSeconds(0.5);}');
+      }
+      steps.push({
+        id: 'demo3',
+        validation: function (actions) {
+          var demoActions = [
+            {"action":"led","parameters":[1,"lime"]},
+            {"action":"led","parameters":[1,"black"]},
+            {"action":"led","parameters":[2,"lime"]},
+            {"action":"led","parameters":[2,"black"]},
+            {"action":"led","parameters":[3,"lime"]},
+            {"action":"led","parameters":[3,"black"]},
+            {"action":"led","parameters":[1,"lime"]},
+            {"action":"led","parameters":[1,"black"]},
+            {"action":"led","parameters":[2,"lime"]},
+            {"action":"led","parameters":[2,"black"]},
+            {"action":"led","parameters":[3,"lime"]},
+            {"action":"led","parameters":[3,"black"]},
+            {"action":"led","parameters":[1,"lime"]},
+            {"action":"led","parameters":[1,"black"]},
+            {"action":"led","parameters":[2,"lime"]},
+            {"action":"led","parameters":[2,"black"]},
+            {"action":"led","parameters":[3,"lime"]},
+            {"action":"led","parameters":[3,"black"]},
+          ];
+          return validateDemoActions(actions, demoActions);
+        }
+      });
+    </script>
+
+    <div class="row step-text" id="demo4-text" style="display: none">
+      <div class="twelve columns" style="margin-top: 10%">
+        <h2>Combinaison de répétitions</h2>
+        <p>Dans cette danse, on se répète plusieurs fois. Essayez d'écrire le code minimal pour la reproduire.</p>
+        <p>Cliquez sur le bouton pour la voir.</p>
+        <button class="demo-button" onclick="playDemo4()">Jouer la danse</button>
+      </div>
+    </div>
+
+    <xml xmlns="https://developers.google.com/blockly/xml" id="demo4-toolbox" style="display: none">
+      <block type="controls_repeat_ext">
+        <value name="TIMES">
+          <block type="math_number">
+            <field name="NUM">10</field>
+          </block>
+        </value>
+      </block>
+      <block type="turn_led_on_simple_colors">
+        <value name="LED">
+          <block type="field_dropdown">
+            <field name="LED">0</field>
+          </block>
+        </value>
+        <value name="COLOR">
+          <block type="field_colour">
+            <field name="COLOR">blue</field>
+          </block>
+        </value>
+      </block>
+      <block type="turn_led_off">
+        <value name="LED">
+          <block type="field_dropdown">
+            <field name="FIELDNAME">NOSE</field>
+          </block>
+        </value>
+      </block>
+    </xml>
+
+    <xml xmlns="https://developers.google.com/blockly/xml" id="demo4-startBlocks" style="display: none">
+    </xml>
+    
+    <script>
+      function playDemo4() {
+        runDemoCode('for (var i = 0; i < 4; i++) { for (var j = 0; j < 3; j++) {led(0,"white");waitForSeconds(0.2);led(0,"black");waitForSeconds(0.2);}; led(2,"red");waitForSeconds(0.2);led(2,"black");waitForSeconds(0.2);led(3,"blue");waitForSeconds(0.2);led(3,"black");waitForSeconds(0.2);}');
+      }
+      steps.push({
+        id: 'demo4',
+        validation: function (actions) {
+          var demoActions = [
+            {"action":"led","parameters":[0,"white"]},
+            {"action":"led","parameters":[0,"black"]},
+            {"action":"led","parameters":[0,"white"]},
+            {"action":"led","parameters":[0,"black"]},
+            {"action":"led","parameters":[0,"white"]},
+            {"action":"led","parameters":[0,"black"]},
+            {"action":"led","parameters":[2,"red"]},
+            {"action":"led","parameters":[2,"black"]},
+            {"action":"led","parameters":[3,"blue"]},
+            {"action":"led","parameters":[3,"black"]},
+            {"action":"led","parameters":[0,"white"]},
+            {"action":"led","parameters":[0,"black"]},
+            {"action":"led","parameters":[0,"white"]},
+            {"action":"led","parameters":[0,"black"]},
+            {"action":"led","parameters":[0,"white"]},
+            {"action":"led","parameters":[0,"black"]},
+            {"action":"led","parameters":[2,"red"]},
+            {"action":"led","parameters":[2,"black"]},
+            {"action":"led","parameters":[3,"blue"]},
+            {"action":"led","parameters":[3,"black"]},
+            {"action":"led","parameters":[0,"white"]},
+            {"action":"led","parameters":[0,"black"]},
+            {"action":"led","parameters":[0,"white"]},
+            {"action":"led","parameters":[0,"black"]},
+            {"action":"led","parameters":[0,"white"]},
+            {"action":"led","parameters":[0,"black"]},
+            {"action":"led","parameters":[2,"red"]},
+            {"action":"led","parameters":[2,"black"]},
+            {"action":"led","parameters":[3,"blue"]},
+            {"action":"led","parameters":[3,"black"]},
+            {"action":"led","parameters":[0,"white"]},
+            {"action":"led","parameters":[0,"black"]},
+            {"action":"led","parameters":[0,"white"]},
+            {"action":"led","parameters":[0,"black"]},
+            {"action":"led","parameters":[0,"white"]},
+            {"action":"led","parameters":[0,"black"]},
+            {"action":"led","parameters":[2,"red"]},
+            {"action":"led","parameters":[2,"black"]},
+            {"action":"led","parameters":[3,"blue"]},
+            {"action":"led","parameters":[3,"black"]},
+          ];
+          return validateDemoActions(actions, demoActions, 10);
+        }
+      });
+    </script>
+
+    <div class="row step-text" id="demo5-text" style="display: none">
+      <div class="twelve columns" style="margin-top: 10%">
+        <h2>Son et lumière</h2>
+        <p>Pour cette danse, on combine les différents éléments. Comme toujours, essayez d'utiliser des boucles pour réduire la taille du programme.</p>
+        <p>Cliquez sur le bouton pour la voir.</p>
+        <button class="demo-button" onclick="playDemo5()">Jouer la danse</button>
+      </div>
+    </div>
+
+    <xml xmlns="https://developers.google.com/blockly/xml" id="demo5-toolbox" style="display: none">
+      <block type="controls_repeat_ext">
+        <value name="TIMES">
+          <block type="math_number">
+            <field name="NUM">10</field>
+          </block>
+        </value>
+      </block>
+      <block type="turn_led_on_simple_colors">
+        <value name="LED">
+          <block type="field_dropdown">
+            <field name="LED">0</field>
+          </block>
+        </value>
+        <value name="COLOR">
+          <block type="field_colour">
+            <field name="COLOR">blue</field>
+          </block>
+        </value>
+      </block>
+      <block type="turn_led_off">
+        <value name="LED">
+          <block type="field_dropdown">
+            <field name="FIELDNAME">NOSE</field>
+          </block>
+        </value>
+      </block>
+      <block type="play_note">
+        <value name="SOUND">
+          <block type="field_dropdown">
+            <field name="FIELDNAME">1noteA4</field>
+          </block>
+        </value>
+      </block>
+    </xml>
+
+    <xml xmlns="https://developers.google.com/blockly/xml" id="demo5-startBlocks" style="display: none">
+    </xml>
+    
+    <script>
+      function playDemo5() {
+        runDemoCode('for (var i = 0; i < 3; i++) { playSound("choreographies/1noteC5.mp3"); waitForSeconds(0.1); led(0,"white"); waitForSeconds(0.1); for(var j = 0; j < 2; j++) { led(1,"red"); waitForSeconds(0.1); playSound("choreographies/1noteA4.mp3"); waitForSeconds(0.1); led(1, "black"); waitForSeconds(0.1); led(3, "blue"); waitForSeconds(0.1); led(3, "black"); waitForSeconds(0.1);}; led(0,"black"); waitForSeconds(0.1); }; led(2,"white"); waitForSeconds(0.1); led(2, "black");');
+      }
+      steps.push({
+        id: 'demo5',
+        validation: function (actions) {
+          var demoActions = [
+            {"action":"playSound","parameters":["choreographies/1noteC5.mp3"]},
+            {"action":"led","parameters":[0,"white"]},
+            {"action":"led","parameters":[1,"red"]},
+            {"action":"playSound","parameters":["choreographies/1noteA4.mp3"]},
+            {"action":"led","parameters":[1,"black"]},
+            {"action":"led","parameters":[3,"blue"]},
+            {"action":"led","parameters":[3,"black"]},
+            {"action":"led","parameters":[1,"red"]},
+            {"action":"playSound","parameters":["choreographies/1noteA4.mp3"]},
+            {"action":"led","parameters":[1,"black"]},
+            {"action":"led","parameters":[3,"blue"]},
+            {"action":"led","parameters":[3,"black"]},
+            {"action":"led","parameters":[0,"black"]},
+            {"action":"playSound","parameters":["choreographies/1noteC5.mp3"]},
+            {"action":"led","parameters":[0,"white"]},
+            {"action":"led","parameters":[1,"red"]},
+            {"action":"playSound","parameters":["choreographies/1noteA4.mp3"]},
+            {"action":"led","parameters":[1,"black"]},
+            {"action":"led","parameters":[3,"blue"]},
+            {"action":"led","parameters":[3,"black"]},
+            {"action":"led","parameters":[1,"red"]},
+            {"action":"playSound","parameters":["choreographies/1noteA4.mp3"]},
+            {"action":"led","parameters":[1,"black"]},
+            {"action":"led","parameters":[3,"blue"]},
+            {"action":"led","parameters":[3,"black"]},
+            {"action":"led","parameters":[0,"black"]},
+            {"action":"playSound","parameters":["choreographies/1noteC5.mp3"]},
+            {"action":"led","parameters":[0,"white"]},
+            {"action":"led","parameters":[1,"red"]},
+            {"action":"playSound","parameters":["choreographies/1noteA4.mp3"]},
+            {"action":"led","parameters":[1,"black"]},
+            {"action":"led","parameters":[3,"blue"]},
+            {"action":"led","parameters":[3,"black"]},
+            {"action":"led","parameters":[1,"red"]},
+            {"action":"playSound","parameters":["choreographies/1noteA4.mp3"]},
+            {"action":"led","parameters":[1,"black"]},
+            {"action":"led","parameters":[3,"blue"]},
+            {"action":"led","parameters":[3,"black"]},
+            {"action":"led","parameters":[0,"black"]},
+            {"action":"led","parameters":[2,"white"]},
+            {"action":"led","parameters":[2,"black"]},
+          ];
+          return validateDemoActions(actions, demoActions, 14);
+        }
+      });
+    </script>
+
+    <div class="row step-text" id="final-text" style="display: none">
+      <div class="twelve columns" style="margin-top: 10%">
+        <h2>Final <img src="/images/smileys/nabzflower.gif" /></h2>
+        <p>Laissez libre cours à votre imagination !</p>
+      </div>
+    </div>
+
+    <xml xmlns="https://developers.google.com/blockly/xml" id="final-toolbox" style="display: none">
+      <category name="Répéter" colour="%{BKY_LOOPS_HUE}">
+        <block type="controls_repeat_ext">
+          <value name="TIMES">
+            <block type="math_number">
+              <field name="NUM">10</field>
+            </block>
+          </value>
+        </block>
+        <block type="controls_whileUntil"></block>
+      </category>
+      <category name="Maths" colour="%{BKY_MATH_HUE}">
+        <block type="math_number">
+          <field name="NUM">123</field>
+        </block>
+        <block type="math_arithmetic"></block>
+        <block type="math_single"></block>
+      </category>
+      <sep></sep>
+      <category name="Leds" colour="290">
+      <block type="blink_nose">
+        <value name="COLOR">
+          <block type="field_colour">
+            <field name="COLOR">#00FF00</field>
+          </block>
+        </value>
+      </block>
+      <block type="blink_middle">
+        <value name="COLOR">
+          <block type="string">
+            <field name="COLOR">#0000FF</field>
+          </block>
+        </value>
+      </block>
+      <block type="turn_led_on">
+        <value name="LED">
+          <block type="field_dropdown">
+            <field name="LED">0</field>
+          </block>
+        </value>
+        <value name="COLOR">
+          <block type="field_colour">
+            <field name="COLOR">#00FF00</field>
+          </block>
+        </value>
+      </block>
+      <block type="turn_led_off">
+        <value name="LED">
+          <block type="field_dropdown">
+            <field name="FIELDNAME">NOSE</field>
+          </block>
+        </value>
+      </block>
+      </category>
+      <category name="Oreilles" colour="160">
+        <block type="move_ear">
+          <value name="EAR">
+            <block type="field_dropdown">
+              <field name="FIELDNAME">LEFT</field>
+            </block>
+          </value>
+          <value name="STEPS">
+            <block type="field_number">
+              <field name="NUM">1</field>
+            </block>
+          </value>
+        </block>
+      </category>
+      <category name="Sons" colour="30">
+        <block type="play_note">
+          <value name="SOUND">
+            <block type="field_dropdown">
+              <field name="FIELDNAME">1noteA4</field>
+            </block>
+          </value>
+        </block>
+        <block type="play_notes">
+          <value name="SOUND">
+            <block type="field_dropdown">
+              <field name="FIELDNAME">2notesC6C4</field>
+            </block>
+          </value>
+        </block>
+        <block type="say_word">
+          <value name="SOUND">
+            <block type="field_dropdown">
+              <field name="FIELDNAME">youpi</field>
+            </block>
+          </value>
+        </block>
+      </category>
+      <sep></sep>
+      <category name="Variables" custom="VARIABLE" colour="%{BKY_VARIABLES_HUE}">
+      </category>
+      <category name="Functions" custom="PROCEDURE" colour="%{BKY_PROCEDURES_HUE}">
+      </category>
+    </xml>
+
+    <xml xmlns="https://developers.google.com/blockly/xml" id="final-startBlocks" style="display: none">
+    </xml>
+    
+    <script>
+      steps.push({
+        id: 'final',
+        validation: function (actions) {
+            return {"result": "ignore"};
+        }
+      });
+    </script>
+    
+    <div class="row">
+      <div class="twelve columns" style="margin-top: 5%">
+        <div style="width: 100%">
+          <div id="blocklyDiv" style="display: inline-block; height: 480px; width: 100%"></div>
+        </div>
+
+        <p>
+          <button onclick="runCode()" id="runButton">Exécuter</button>
+          <button onclick="stop()" id="stopButton" style="display:none">Arrêter</button>
+        </p>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    var currentStepIx;
+    var currentStep;
+    var workspace;
+    var runButton = $('#runButton');
+    var stopButton = $('#stopButton');
+    var myInterpreter = null;
+    var runner;
+    var latestCode = '';
+    var localStorage = window.localStorage;
+    
+    $('.modal .close').bind('click', function() {
+      $(this).parents('.modal').hide();
+    });
+
+    function navStep(step) {
+      currentStepIx = step;
+      setupStep();
+    }
+    
+    function setupNav() {
+      var stepsNav = $('#stepsNav');
+      stepsNav.empty();
+      steps.forEach(function(step, index) {
+        var cl = "";
+        if (localStorage.getItem(step.id)) {
+          cl = " done";
+        }
+        if (index + 1 == currentStepIx) {
+          cl = cl + " current";
+        }
+        stepsNav.append('<a href="#' + step.id + '" onclick="navStep(' + (index + 1) + ')" class="navstep' + cl + '">' + (index + 1) + '</a>\n');
+      });
+    }
+
+    function setupStep() {
+      setupNav();
+      $('#blocklyDiv').empty();
+      $('.step-text').hide();
+      currentStep = steps[currentStepIx - 1];
+      window.location.hash = currentStep.id;
+    
+      $('#' + currentStep.id + '-text').show();
+      workspace = Blockly.inject('blocklyDiv', {media: '/media/', toolbox: document.getElementById(currentStep.id + '-toolbox')});
+      Blockly.Xml.domToWorkspace(document.getElementById(currentStep.id + '-startBlocks'), workspace);
+
+      // Load the interpreter now, and upon future changes.
+      generateCodeAndLoadIntoInterpreter();
+      workspace.addChangeListener(function(event) {
+        if (!(event instanceof Blockly.Events.Ui)) {
+          // Something changed. Parser needs to be reloaded.
+          generateCodeAndLoadIntoInterpreter();
+        }
+      });
+    }
+
+    // Exit is used to signal the end of a script.
+    Blockly.JavaScript.addReservedWords('exit');
+
+    function initApi(interpreter, scope) {
+      // Add an API for the wait block.  See wait_block.js
+      initInterpreterWaitForSeconds(interpreter, scope);
+
+      // Add an API for the nabaztag blocks.  See nabaztag_blocks.js
+      initInterpreterNabaztag(interpreter, scope);
+
+      // Add an API function for highlighting blocks.
+      var wrapper = function(id) {
+        id = id ? id.toString() : '';
+        return interpreter.createPrimitive(highlightBlock(id));
+      };
+      interpreter.setProperty(scope, 'highlightBlock',
+          interpreter.createNativeFunction(wrapper));
+    }
+
+    function highlightBlock(id) {
+      workspace.highlightBlock(id);
+    }
+
+    function resetStepUi() {
+      workspace.highlightBlock(null);
+      runButton.show();
+      stopButton.hide();
+    }
+
+    function generateCodeAndLoadIntoInterpreter() {
+      // Generate JavaScript code and parse it.
+      Blockly.JavaScript.STATEMENT_PREFIX = 'highlightBlock(%1);\n';
+      Blockly.JavaScript.addReservedWords('highlightBlock');
+      latestCode = Blockly.JavaScript.workspaceToCode(workspace);
+
+      if (!myInterpreter) {
+        resetStepUi();
+      }
+    }
+
+    function resetInterpreter(callback) {
+      if (runner) {
+        clearTimeout(runner);
+        runner = null;
+      }
+      if (myInterpreter) {
+        nabaztagExitInteractiveMode(callback);
+        myInterpreter = null;
+      } else {
+        if (callback) {
+          setTimeout(callback, 1);
+        }
+      }
+    }
+
+    function testSolution(actions) {
+      var validationResult = currentStep.validation(actions);
+      if (validationResult.result == "ok") {
+        $('#nextStepModal').show();
+        nabaztagPlaySound("nabblockly/congrats/*.mp3");
+        $('#nextStepModal .next-step').bind('click', function() {
+          $('#nextStepModal').hide();
+          localStorage.setItem(currentStep.id, true);
+          nextStep();
+        });
+      } else if (validationResult.result == "error") {
+        if (validationResult.message) {
+          $('#redoModal .message').html(validationResult.message);
+        } else {
+          $('#redoModal .message').empty();
+        }
+        nabaztagPlaySound("nabblockly/redo/*.mp3");
+        $('#redoModal').show();
+      }
+    }
+
+    function runDemoCode(demoCode) {
+      if (!myInterpreter) {
+        runButton.prop('disabled', true);
+        $(".demo-button").prop('disabled', true);
+
+        setTimeout(function() {
+          // Begin execution
+          myInterpreter = new Interpreter(demoCode, initApi);
+          nabaztagEnterInteractiveMode();
+          myInterpreter._nabaztagActions = [];
+          runner = function() {
+            if (myInterpreter) {
+              var hasMore = myInterpreter.step();
+              if (hasMore) {
+                setTimeout(runner, 10);
+              } else {
+                // Program is complete.
+                var actions = myInterpreter._nabaztagActions;
+                console.log(JSON.stringify(actions));
+                runButton.prop('disabled', false);
+                $(".demo-button").prop('disabled', false);
+                resetInterpreter(null);
+              }
+            }
+          };
+          runner();
+        }, 1);
+        return;
+      }
+    }
+    
+    function validateDemoActions(actions, demoActions, optimumBlockCount) {
+      if (actions.length < demoActions.length) {
+        return {"result": "error", "message": "Un peu court ! Regardez à nouveau la séquence en cliquant sur le bouton 'Jouer la danse'"}
+      }
+      if (actions.length > demoActions.length) {
+        return {"result": "error", "message": "Trop long ! Regardez à nouveau la séquence en cliquant sur le bouton 'Jouer la danse'"}
+      }
+      
+      for (var ix = 0; ix < actions.length; ix++) {
+        if (actions[ix].action != demoActions[ix].action) {
+          console.log(ix);
+          console.log(JSON.stringify(actions));
+          return {"result": "error", "message": "Pas exactement ça ! Regardez à nouveau la séquence en cliquant sur le bouton 'Jouer la danse'"}
+        }
+        if (actions[ix].parameters.length != demoActions[ix].parameters.length) {
+          console.log(ix);
+          console.log(JSON.stringify(actions));
+          return {"result": "error", "message": "Pas exactement ça ! Regardez à nouveau la séquence en cliquant sur le bouton 'Jouer la danse'"}
+        }
+        for (var px = 0; px < actions[ix].parameters.length; px++) {
+          if (actions[ix].parameters[px] != demoActions[ix].parameters[px]) {
+            console.log(ix);
+            console.log(px);
+            console.log(JSON.stringify(actions));
+            return {"result": "error", "message": "Pas exactement ça ! Regardez à nouveau la séquence en cliquant sur le bouton 'Jouer la danse'"}
+          }
+        }
+      }
+      if (optimumBlockCount && workspace.getAllBlocks().length > optimumBlockCount) {
+        return {"result": "error", "message": "Essayez d'utiliser moins de blocs à l'aide de boucle répéter"}
+      }
+      return {"result": "ok"};
+    }
+
+    function runCode() {
+      if (!myInterpreter) {
+        resetStepUi();
+        runButton.hide();
+        stopButton.show();
+
+        setTimeout(function() {
+          // Begin execution
+          myInterpreter = new Interpreter(latestCode, initApi);
+          nabaztagEnterInteractiveMode();
+          myInterpreter._nabaztagActions = [];
+          runner = function() {
+            if (myInterpreter) {
+              var hasMore = myInterpreter.step();
+              if (hasMore) {
+                setTimeout(runner, 10);
+              } else {
+                // Program is complete.
+                var actions = myInterpreter._nabaztagActions;
+                resetStepUi();
+                resetInterpreter(function() {
+                  testSolution(actions);
+                });
+              }
+            }
+          };
+          runner();
+        }, 1);
+        return;
+      }
+    }
+    
+    function stop() {
+      if (myInterpreter) {
+        resetStepUi();            
+        resetInterpreter(null);
+      }
+    }
+    
+    function nextStep() {
+      currentStepIx = currentStepIx + 1;
+      if (currentStepIx > steps.length) {
+        window.location.href = '#final';
+      } else {
+        setupStep();
+      }
+    }
+    
+    currentStepIx = 1;
+    if (window.location.hash != '') {
+      steps.forEach(function(step, index) {
+        if (window.location.hash == '#' + step.id) {
+          currentStepIx = index + 1;
+        }
+      });
+    }
+    
+    setupStep();
+  </script>
+
+
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+</body>
+</html>

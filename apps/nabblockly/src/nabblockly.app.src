@@ -1,0 +1,18 @@
+{application, nabblockly,
+ [{description, "Blockly for Nabaztag"},
+  {vsn, "0.1.0"},
+  {registered, []},
+  {mod, { nabblockly_app, []}},
+  {applications,
+   [kernel,
+    stdlib,
+    cowboy,
+    jiffy
+   ]},
+  {env,[]},
+  {modules, []},
+
+  {maintainers, []},
+  {licenses, []},
+  {links, []}
+ ]}.

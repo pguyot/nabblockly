@@ -1,0 +1,38 @@
+@font-face {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 300;
+  src: url("Raleway-Light.eot");
+  src:
+    local('Raleway Light'), local('Raleway-Light'),
+    url("Raleway-Light?#iefix") format('embedded-opentype'),
+    url("Raleway-Light.woff2") format('woff2'),
+    url("Raleway-Light.woff") format('woff'),
+    url("Raleway-Light.ttf") format('truetype');
+}
+
+@font-face {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 400;
+  src: url("Raleway-Regular.eot");
+  src:
+    local('Raleway'), local('Raleway-Regular'),
+    url("Raleway-Regular?#iefix") format('embedded-opentype'),
+    url("Raleway-Regular.woff2") format('woff2'),
+    url("Raleway-Regular.woff") format('woff'),
+    url("Raleway-Regular.ttf") format('truetype');
+}
+
+@font-face {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 600;
+  src: url("Raleway-SemiBold.eot");
+  src:
+    local('Raleway SemiBold'), local('Raleway-SemiBold'),
+    url("Raleway-SemiBold?#iefix") format('embedded-opentype'),
+    url("Raleway-SemiBold.woff2") format('woff2'),
+    url("Raleway-SemiBold.woff") format('woff'),
+    url("Raleway-SemiBold.ttf") format('truetype');
+}
