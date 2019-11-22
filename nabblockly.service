@@ -1,0 +1,16 @@
+[Unit]
+Description=Nabblockly service
+After=nabd.service
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=root
+WorkingDirectory=/home/pi/pynab/nabblockly
+ExecStart=/home/pi/pynab/nabblockly/_build/default/rel/nabblockly/bin/nabblockly foreground
+
+[Install]
+WantedBy=multi-user.target
+
