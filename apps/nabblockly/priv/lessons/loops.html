@@ -962,6 +962,11 @@
     $('.modal .close').bind('click', function() {
       $(this).parents('.modal').hide();
     });
+    $('#nextStepModal .next-step').bind('click', function() {
+      $('#nextStepModal').hide();
+      localStorage.setItem(currentStep.id, true);
+      nextStep();
+    });
 
     function navStep(step) {
       currentStepIx = step;
@@ -1064,11 +1069,6 @@
       if (validationResult.result == "ok") {
         $('#nextStepModal').show();
         nabaztagPlaySound("nabblockly/congrats/*.mp3");
-        $('#nextStepModal .next-step').bind('click', function() {
-          $('#nextStepModal').hide();
-          localStorage.setItem(currentStep.id, true);
-          nextStep();
-        });
       } else if (validationResult.result == "error") {
         if (validationResult.message) {
           $('#redoModal .message').html(validationResult.message);
