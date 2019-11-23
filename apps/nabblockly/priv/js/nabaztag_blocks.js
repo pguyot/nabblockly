@@ -397,9 +397,7 @@ function initInterpreterNabaztag(interpreter, scope) {
   var ledBlinkWrapper = interpreter.createAsyncFunction(function(led, color, callback) {
     interpreter._nabaztagActions.push({action:"ledBlink", parameters:[led.data, color.data]});
     var rgba = colorToRGBA(color);
-    console.log(rgba);
     var base64ch = btoa(String.fromCharCode.apply(null, [0,1,10,0,7,led,rgba[0],rgba[1],rgba[2],0,0,15,7,led,0,0,0,0,0]));
-    console.log(base64ch);
     nabaztagSendChoreography(base64ch, callback);
   });
 
