@@ -246,20 +246,20 @@ Blockly.JavaScript['blink_middle'] = function(block) {
 Blockly.JavaScript['turn_led_on'] = function(block) {
   var led = String(block.getFieldValue('LED'));
   var color = String(block.getFieldValue('COLOR'));
-  var ledIx = ["NOSE", "LEFT", "MIDDLE", "RIGHT"].indexOf(led);
+  var ledIx = ["BOTTOM", "RIGHT", "MIDDLE", "LEFT", "NOSE"].indexOf(led);
   var code = 'led(' + ledIx + ', "' + color + '");\n';
   return code;
 };
 Blockly.JavaScript['turn_led_on_simple_colors'] = function(block) {
   var led = String(block.getFieldValue('LED'));
   var color = String(block.getFieldValue('COLOR'));
-  var ledIx = ["NOSE", "LEFT", "MIDDLE", "RIGHT"].indexOf(led);
+  var ledIx = ["BOTTOM", "RIGHT", "MIDDLE", "LEFT", "NOSE"].indexOf(led);
   var code = 'led(' + ledIx + ', "' + color + '");\n';
   return code;
 };
 Blockly.JavaScript['turn_led_off'] = function(block) {
   var led = String(block.getFieldValue('LED'));
-  var ledIx = ["NOSE", "LEFT", "MIDDLE", "RIGHT"].indexOf(led);
+  var ledIx = ["BOTTOM", "RIGHT", "MIDDLE", "LEFT", "NOSE"].indexOf(led);
   var code = 'led(' + ledIx + ', "black");\n';
   return code;
 };
@@ -397,7 +397,7 @@ function initInterpreterNabaztag(interpreter, scope) {
   var ledBlinkWrapper = interpreter.createAsyncFunction(function(led, color, callback) {
     interpreter._nabaztagActions.push({action:"ledBlink", parameters:[led.data, color.data]});
     var rgba = colorToRGBA(color);
-    var base64ch = btoa(String.fromCharCode.apply(null, [0,1,10,0,7,led,rgba[0],rgba[1],rgba[2],0,0,15,7,led,0,0,0,0,0]));
+    var base64ch = btoa(String.fromCharCode.apply(null, [0,1,5,0,7,led,rgba[0],rgba[1],rgba[2],0,0,3,7,led,0,0,0,0,0]));
     nabaztagSendChoreography(base64ch, callback);
   });
 
