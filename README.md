@@ -1,60 +1,62 @@
-NabBlockly
-=====
+# NabBlockly
 
-Application Blockly pour le Nabaztag.
+NabBlockly, est une interface de programmation par blocs des chorégraphies pour le Nabaztag et Nabaztag:tag, proche de ce qui existe avec [Stratch](https://llk.github.io/scratch-gui/develop/) ou [Code.org](https://code.org/).
 
-Pré-requis
------
+## Pré-requis
 
- * Un Nabaztag avec [pynab](https://github.com/nabaztag2018/pynab).
- 
+1. Un Nabaztag ou Nabaztag:tag avec [pynab](https://github.com/nabaztag2018/pynab).
+
+    Depuis la version 0.6.3b de pynab, NabBlockly est installé par défaut des releases et fonctionne sur le port [8080](http://nabaztag.local:8080/). L'installation est d'ailleurs possible sur le port 80 en modifiant la configuration de Nginx.
+
     NabBlockly requiert actuellement la branche master de pynab.
 
- * Erlang
- 
-    Le code est développé avec la version 21 de Erlang/OTP.
-    
-        sudo apt-get install erlang
-    
+2. Erlang
 
-Installation
------
+    Le code est développé avec la version 21 de Erlang/OTP.
+    ```shell
+    sudo apt-get install erlang
+    ```
+
+## Installation
 
 La compilation se fait avec [rebar3](http://github.com/erlang/rebar3).
 Attention à bien faire un clone dans pynab (nécessaire pour les sons).
+```shell
+cd /home/pi/pynab
+git clone https://github.com/pguyot/nabblockly
+cd nabblockly
+wget https://s3.amazonaws.com/rebar3/rebar3 && chmod +x rebar3
+./rebar3 release
+```
 
-    cd /home/pi/pynab
-    git clone https://github.com/pguyot/nabblockly
-    cd nabblockly
-    wget https://s3.amazonaws.com/rebar3/rebar3 && chmod +x rebar3
-    ./rebar3 release
-
-Configuration
------
+## Configuration
 
 NabBlockly comprend un serveur web qui remplace celui de Pynab :
+```shell
+sudo cp nabblockly-nginx.conf /etc/nginx/sites-enabled/nabblockly
+sudo mv /etc/nginx/sites-enabled/pynab /etc/nginx/sites-available/pynab
+sudo service nginx reload
+```
 
-    sudo cp nabblockly-nginx.conf /etc/nginx/sites-enabled/nabblockly
-    sudo mv /etc/nginx/sites-enabled/pynab /etc/nginx/sites-available/pynab
-    sudo service nginx reload
+## Démarrage
 
-Démarrage
------
-
-    sudo cp nabblockly.service /lib/systemd/system/
-    sudo systemctl enable nabblockly
-    sudo service nabblockly start
+```shell
+sudo cp nabblockly.service /lib/systemd/system/
+sudo systemctl enable nabblockly
+sudo service nabblockly start
+```
 
 Éventuellement, désactivation des services pynab (pour ne pas interférer) :
-
-    sudo systemctl disable nabclockd
-    sudo systemctl disable nabweb
-    sudo systemctl disable nabmastodond
-    sudo systemctl disable nabtaichid
-    sudo systemctl disable nabsurprised
-    sudo systemctl disable nab8balld
-    sudo systemctl disable nabweatherd
-    sudo reboot
+```shell
+sudo systemctl disable nabclockd
+sudo systemctl disable nabweb
+sudo systemctl disable nabmastodond
+sudo systemctl disable nabtaichid
+sudo systemctl disable nabsurprised
+sudo systemctl disable nab8balld
+sudo systemctl disable nabweatherd
+sudo reboot
+```
 
 Smileys
 -----
