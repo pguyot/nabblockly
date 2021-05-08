@@ -336,10 +336,10 @@
             if (actions.length == 0) {
               return {"result": "error"};
             }
-            if (actions[0].action != "led" || actions[0].parameters[0] != 0 || actions[0].parameters[1] == "black") {
+            if (actions[0].action != "led" || actions[0].parameters[0] != 4 || actions[0].parameters[1] == "black") {
               return {"result": "error", "message": "Il faut commencer par allumer le nez"};
             }
-            if (actions[actions.length - 1].action != "led" || actions[actions.length - 1].parameters[0] != 0 || actions[actions.length - 1].parameters[1] != "black") {
+            if (actions[actions.length - 1].action != "led" || actions[actions.length - 1].parameters[0] != 4 || actions[actions.length - 1].parameters[1] != "black") {
               return {"result": "error", "message": "Il faut terminer par éteindre le nez"};
             }
             var nbSteps = 0;
