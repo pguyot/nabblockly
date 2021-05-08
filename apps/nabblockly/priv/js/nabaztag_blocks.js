@@ -230,12 +230,12 @@ Blockly.defineBlocksWithJsonArray([
  * Generator for these blocks create calls to new methods.
  */
 Blockly.JavaScript['blink_nose_fuchsia'] = function(block) {
-  var code = 'ledBlink(0, "fuchsia");\n';
+  var code = 'ledBlink(4, "fuchsia");\n';
   return code;
 };
 Blockly.JavaScript['blink_nose'] = function(block) {
   var color = String(block.getFieldValue('COLOR'));
-  var code = 'ledBlink(0, "' + color + '");\n';
+  var code = 'ledBlink(4, "' + color + '");\n';
   return code;
 };
 Blockly.JavaScript['blink_middle'] = function(block) {
