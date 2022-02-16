@@ -1,0 +1,28 @@
+name: Build on pynab
+on:
+  push:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        target: [pynab-0.9.1]
+        include:
+        - target: pynab-0.9.1
+          cpu: arm1176
+          base_image: https://github.com/nabaztag2018/pynab/releases/download/v0.9.1/pynab-v0.9.1.img.xz
+    steps:
+    - uses: actions/checkout@v2
+    - uses: pguyot/arm-runner-action@v2
+      with:
+        base_image: ${{ matrix.base_image }}
+        cpu: ${{ matrix.cpu }}
+        image_additional_mb: 1024
+        commands: |
+            apt-get update -y --allow-releaseinfo-change
+            apt-get install --no-install-recommends -y erlang
+            rm -rf /home/pi/pynab/nabblockly
+            cp -Rp /nabblockly /home/pi/pynab/nabblockly
+            cd /home/pi/pynab/nabblockly
+            wget https://github.com/erlang/rebar3/releases/download/3.15.1/rebar3 && chmod +x rebar3
+            ./rebar3 release
