@@ -8,8 +8,6 @@ NabBlockly, est une interface de programmation par blocs des chorégraphies pour
 
     Depuis la version 0.6.3b de pynab, NabBlockly est installé par défaut des releases et fonctionne sur le port [8080](http://nabaztag.local:8080/). L'installation est d'ailleurs possible sur le port 80 en modifiant la configuration de Nginx.
 
-    NabBlockly requiert actuellement la branche master de pynab.
-
 2. Erlang
 
     Le code est développé avec la version 21 de Erlang/OTP.
@@ -19,13 +17,16 @@ NabBlockly, est une interface de programmation par blocs des chorégraphies pour
 
 ## Installation
 
-La compilation se fait avec [rebar3](http://github.com/erlang/rebar3).
+La compilation se fait avec [rebar3](http://github.com/erlang/rebar3). La
+version 3.15.1 est la dernière compatible avec OTP-21 qui est la version
+d'Erlang sur les images pynab actuelles à base de Buster.
+
 Attention à bien faire un clone dans pynab (nécessaire pour les sons).
 ```shell
 cd /home/pi/pynab
 git clone https://github.com/pguyot/nabblockly
 cd nabblockly
-wget https://s3.amazonaws.com/rebar3/rebar3 && chmod +x rebar3
+wget https://github.com/erlang/rebar3/releases/download/3.15.1/rebar3 && chmod +x rebar3
 ./rebar3 release
 ```
 

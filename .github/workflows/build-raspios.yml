@@ -1,0 +1,31 @@
+name: Build on various RaspberryPi OS versions
+on:
+  push:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        target: [raspbian, raspios, raspios64]
+        include:
+        - target: raspbian
+          cpu: arm1176
+          base_image: raspbian_lite:latest
+        - target: raspios
+          cpu: arm1176
+          base_image: raspios_lite:latest
+        - target: raspios64
+          cpu: cortex-a53
+          base_image: raspios_lite_arm64:latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: pguyot/arm-runner-action@v2
+      with:
+        base_image: ${{ matrix.base_image }}
+        cpu: ${{ matrix.cpu }}
+        image_additional_mb: 1024
+        commands: |
+            apt-get update -y --allow-releaseinfo-change
+            apt-get install --no-install-recommends -y erlang
+            wget https://github.com/erlang/rebar3/releases/download/3.15.1/rebar3 && chmod +x rebar3
+            ./rebar3 release
