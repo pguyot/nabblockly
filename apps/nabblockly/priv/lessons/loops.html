@@ -261,7 +261,7 @@
             if (item.action != "ledBlink") {
               return {"result": "error", "message": "Faites clignoter le nez et le milieu"};
             }
-            if (item.parameters[0] == 0) {
+            if (item.parameters[0] == 4) {
               nbNose = nbNose + 1;
             } else if (item.parameters[0] == 2) {
               if (nbNose != 7) {
@@ -549,20 +549,20 @@
     
     <script>
       function playDemo2() {
-        runDemoCode('led(0,"red");waitForSeconds(0.5);led(1,"blue");waitForSeconds(0.5);led(1,"black");waitForSeconds(0.5);led(2,"blue");waitForSeconds(0.5);led(2,"black");waitForSeconds(0.5);led(3,"blue");waitForSeconds(0.5);led(3,"black");waitForSeconds(0.5);led(0,"black");');
+        runDemoCode('led(4,"red");waitForSeconds(0.5);led(1,"blue");waitForSeconds(0.5);led(1,"black");waitForSeconds(0.5);led(2,"blue");waitForSeconds(0.5);led(2,"black");waitForSeconds(0.5);led(3,"blue");waitForSeconds(0.5);led(3,"black");waitForSeconds(0.5);led(4,"black");');
       }
       steps.push({
         id: 'demo2',
         validation: function (actions) {
           var demoActions = [
-            {"action":"led","parameters":[0,"red"]},
+            {"action":"led","parameters":[4,"red"]},
             {"action":"led","parameters":[1,"blue"]},
             {"action":"led","parameters":[1,"black"]},
             {"action":"led","parameters":[2,"blue"]},
             {"action":"led","parameters":[2,"black"]},
             {"action":"led","parameters":[3,"blue"]},
             {"action":"led","parameters":[3,"black"]},
-            {"action":"led","parameters":[0,"black"]}
+            {"action":"led","parameters":[4,"black"]}
           ];
           return validateDemoActions(actions, demoActions);
         }
@@ -689,48 +689,48 @@
     
     <script>
       function playDemo4() {
-        runDemoCode('for (var i = 0; i < 4; i++) { for (var j = 0; j < 3; j++) {led(0,"white");waitForSeconds(0.2);led(0,"black");waitForSeconds(0.2);}; led(2,"red");waitForSeconds(0.2);led(2,"black");waitForSeconds(0.2);led(3,"blue");waitForSeconds(0.2);led(3,"black");waitForSeconds(0.2);}');
+        runDemoCode('for (var i = 0; i < 4; i++) { for (var j = 0; j < 3; j++) {led(4,"white");waitForSeconds(0.2);led(4,"black");waitForSeconds(0.2);}; led(2,"red");waitForSeconds(0.2);led(2,"black");waitForSeconds(0.2);led(3,"blue");waitForSeconds(0.2);led(3,"black");waitForSeconds(0.2);}');
       }
       steps.push({
         id: 'demo4',
         validation: function (actions) {
           var demoActions = [
-            {"action":"led","parameters":[0,"white"]},
-            {"action":"led","parameters":[0,"black"]},
-            {"action":"led","parameters":[0,"white"]},
-            {"action":"led","parameters":[0,"black"]},
-            {"action":"led","parameters":[0,"white"]},
-            {"action":"led","parameters":[0,"black"]},
+            {"action":"led","parameters":[4,"white"]},
+            {"action":"led","parameters":[4,"black"]},
+            {"action":"led","parameters":[4,"white"]},
+            {"action":"led","parameters":[4,"black"]},
+            {"action":"led","parameters":[4,"white"]},
+            {"action":"led","parameters":[4,"black"]},
             {"action":"led","parameters":[2,"red"]},
             {"action":"led","parameters":[2,"black"]},
             {"action":"led","parameters":[3,"blue"]},
             {"action":"led","parameters":[3,"black"]},
-            {"action":"led","parameters":[0,"white"]},
-            {"action":"led","parameters":[0,"black"]},
-            {"action":"led","parameters":[0,"white"]},
-            {"action":"led","parameters":[0,"black"]},
-            {"action":"led","parameters":[0,"white"]},
-            {"action":"led","parameters":[0,"black"]},
+            {"action":"led","parameters":[4,"white"]},
+            {"action":"led","parameters":[4,"black"]},
+            {"action":"led","parameters":[4,"white"]},
+            {"action":"led","parameters":[4,"black"]},
+            {"action":"led","parameters":[4,"white"]},
+            {"action":"led","parameters":[4,"black"]},
             {"action":"led","parameters":[2,"red"]},
             {"action":"led","parameters":[2,"black"]},
             {"action":"led","parameters":[3,"blue"]},
             {"action":"led","parameters":[3,"black"]},
-            {"action":"led","parameters":[0,"white"]},
-            {"action":"led","parameters":[0,"black"]},
-            {"action":"led","parameters":[0,"white"]},
-            {"action":"led","parameters":[0,"black"]},
-            {"action":"led","parameters":[0,"white"]},
-            {"action":"led","parameters":[0,"black"]},
+            {"action":"led","parameters":[4,"white"]},
+            {"action":"led","parameters":[4,"black"]},
+            {"action":"led","parameters":[4,"white"]},
+            {"action":"led","parameters":[4,"black"]},
+            {"action":"led","parameters":[4,"white"]},
+            {"action":"led","parameters":[4,"black"]},
             {"action":"led","parameters":[2,"red"]},
             {"action":"led","parameters":[2,"black"]},
             {"action":"led","parameters":[3,"blue"]},
             {"action":"led","parameters":[3,"black"]},
-            {"action":"led","parameters":[0,"white"]},
-            {"action":"led","parameters":[0,"black"]},
-            {"action":"led","parameters":[0,"white"]},
-            {"action":"led","parameters":[0,"black"]},
-            {"action":"led","parameters":[0,"white"]},
-            {"action":"led","parameters":[0,"black"]},
+            {"action":"led","parameters":[4,"white"]},
+            {"action":"led","parameters":[4,"black"]},
+            {"action":"led","parameters":[4,"white"]},
+            {"action":"led","parameters":[4,"black"]},
+            {"action":"led","parameters":[4,"white"]},
+            {"action":"led","parameters":[4,"black"]},
             {"action":"led","parameters":[2,"red"]},
             {"action":"led","parameters":[2,"black"]},
             {"action":"led","parameters":[3,"blue"]},
@@ -793,14 +793,14 @@
     
     <script>
       function playDemo5() {
-        runDemoCode('for (var i = 0; i < 3; i++) { playSound("choreographies/1noteC5.mp3"); waitForSeconds(0.1); led(0,"white"); waitForSeconds(0.1); for(var j = 0; j < 2; j++) { led(1,"red"); waitForSeconds(0.1); playSound("choreographies/1noteA4.mp3"); waitForSeconds(0.1); led(1, "black"); waitForSeconds(0.1); led(3, "blue"); waitForSeconds(0.1); led(3, "black"); waitForSeconds(0.1);}; led(0,"black"); waitForSeconds(0.1); }; led(2,"white"); waitForSeconds(0.1); led(2, "black");');
+        runDemoCode('for (var i = 0; i < 3; i++) { playSound("choreographies/1noteC5.mp3"); waitForSeconds(0.1); led(4,"white"); waitForSeconds(0.1); for(var j = 0; j < 2; j++) { led(1,"red"); waitForSeconds(0.1); playSound("choreographies/1noteA4.mp3"); waitForSeconds(0.1); led(1, "black"); waitForSeconds(0.1); led(3, "blue"); waitForSeconds(0.1); led(3, "black"); waitForSeconds(0.1);}; led(4,"black"); waitForSeconds(0.1); }; led(2,"white"); waitForSeconds(0.1); led(2, "black");');
       }
       steps.push({
         id: 'demo5',
         validation: function (actions) {
           var demoActions = [
             {"action":"playSound","parameters":["choreographies/1noteC5.mp3"]},
-            {"action":"led","parameters":[0,"white"]},
+            {"action":"led","parameters":[4,"white"]},
             {"action":"led","parameters":[1,"red"]},
             {"action":"playSound","parameters":["choreographies/1noteA4.mp3"]},
             {"action":"led","parameters":[1,"black"]},
@@ -811,9 +811,9 @@
             {"action":"led","parameters":[1,"black"]},
             {"action":"led","parameters":[3,"blue"]},
             {"action":"led","parameters":[3,"black"]},
-            {"action":"led","parameters":[0,"black"]},
+            {"action":"led","parameters":[4,"black"]},
             {"action":"playSound","parameters":["choreographies/1noteC5.mp3"]},
-            {"action":"led","parameters":[0,"white"]},
+            {"action":"led","parameters":[4,"white"]},
             {"action":"led","parameters":[1,"red"]},
             {"action":"playSound","parameters":["choreographies/1noteA4.mp3"]},
             {"action":"led","parameters":[1,"black"]},
@@ -824,9 +824,9 @@
             {"action":"led","parameters":[1,"black"]},
             {"action":"led","parameters":[3,"blue"]},
             {"action":"led","parameters":[3,"black"]},
-            {"action":"led","parameters":[0,"black"]},
+            {"action":"led","parameters":[4,"black"]},
             {"action":"playSound","parameters":["choreographies/1noteC5.mp3"]},
-            {"action":"led","parameters":[0,"white"]},
+            {"action":"led","parameters":[4,"white"]},
             {"action":"led","parameters":[1,"red"]},
             {"action":"playSound","parameters":["choreographies/1noteA4.mp3"]},
             {"action":"led","parameters":[1,"black"]},
@@ -837,7 +837,7 @@
             {"action":"led","parameters":[1,"black"]},
             {"action":"led","parameters":[3,"blue"]},
             {"action":"led","parameters":[3,"black"]},
-            {"action":"led","parameters":[0,"black"]},
+            {"action":"led","parameters":[4,"black"]},
             {"action":"led","parameters":[2,"white"]},
             {"action":"led","parameters":[2,"black"]},
           ];
