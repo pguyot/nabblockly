@@ -12,7 +12,7 @@ NabBlockly, est une interface de programmation par blocs des chorégraphies pour
 
     Le code est développé avec la version 21 de Erlang/OTP.
     ```shell
-    sudo apt-get install erlang
+    sudo apt-get install erlang-nox erlang-dev
     ```
 
 ## Installation
