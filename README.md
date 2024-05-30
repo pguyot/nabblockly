@@ -30,6 +30,20 @@ wget https://github.com/erlang/rebar3/releases/download/3.15.1/rebar3 && chmod +
 ./rebar3 release
 ```
 
+NabBlockly est aussi compatible avec des versions plus récentes d'Erlang/OTP et
+de rebar3. Par exemple, les paquets erlang des dernières images de raspios sont
+en version OTP-25.
+
+Pour ces systèmes, le fichier `rebar.config.script` ajuste les versions de
+cowboy et de jiffy. La démarche est la suivante :
+```shell
+git clone https://github.com/pguyot/nabblockly
+cd nabblockly
+wget https://s3.amazonaws.com/rebar3/rebar3 && chmod +x rebar3
+./rebar3 upgrade --all
+./rebar3 release
+```
+
 ## Configuration
 
 NabBlockly comprend un serveur web qui remplace celui de Pynab :
