@@ -20,7 +20,7 @@ jobs:
         image_additional_mb: 1024
         commands: |
             apt-get update -y --allow-releaseinfo-change
-            apt-get install --no-install-recommends -y erlang
+            apt-get install --no-install-recommends -y erlang-nox erlang-dev
             rm -rf /home/pi/pynab/nabblockly
             cp -Rp /nabblockly /home/pi/pynab/nabblockly
             cd /home/pi/pynab/nabblockly

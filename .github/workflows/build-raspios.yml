@@ -26,6 +26,6 @@ jobs:
         image_additional_mb: 1024
         commands: |
             apt-get update -y --allow-releaseinfo-change
-            apt-get install --no-install-recommends -y erlang
+            apt-get install --no-install-recommends -y erlang-nox erlang-dev
             wget https://github.com/erlang/rebar3/releases/download/3.15.1/rebar3 && chmod +x rebar3
             ./rebar3 release
