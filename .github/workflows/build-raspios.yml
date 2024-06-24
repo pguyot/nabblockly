@@ -3,8 +3,9 @@ on:
   push:
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
+      fail-fast: false
       matrix:
         target: [raspbian, raspios, raspios64]
         include:
@@ -27,5 +28,29 @@ jobs:
         commands: |
             apt-get update -y --allow-releaseinfo-change
             apt-get install --no-install-recommends -y erlang-nox erlang-dev
-            wget https://github.com/erlang/rebar3/releases/download/3.15.1/rebar3 && chmod +x rebar3
+            erts_version=`erl +V 2>&1 | sed -E -e 's|.+ emulator version ||g'`
+            case "${erts_version}" in
+                "10.0"*|"10.1"*|"10.2"*|"10.3"*)
+                    # OTP 21
+                    wget https://github.com/erlang/rebar3/releases/download/3.15.1/rebar3
+                    ;;
+                "10."*)
+                    # OTP 22
+                    wget https://github.com/erlang/rebar3/releases/download/3.18.0/rebar3
+                    ;;
+                "11."*)
+                    # OTP 23
+                    wget https://github.com/erlang/rebar3/releases/download/3.20.0/rebar3
+                    ;;
+                "12."*)
+                    # OTP 24
+                    # 3.23.0 is latest release and works with OTP24.
+                    # However, OTP27 has been released and future releases might not work
+                    wget https://github.com/erlang/rebar3/releases/download/3.23.0/rebar3
+                    ;;
+                *)
+                    wget https://s3.amazonaws.com/rebar3/rebar3
+                    ;;
+            esac
+            chmod +x rebar3
             ./rebar3 release

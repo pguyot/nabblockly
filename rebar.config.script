@@ -1,0 +1,9 @@
+case erlang:system_info(otp_release) of
+    "21" ++ _ -> CONFIG;
+    "22" ++ _ ->
+        lists:keyreplace(deps, 1, CONFIG, {deps, [{cowboy,"2.8.0"}, {jiffy,"1.1.1"}]});
+    "23" ++ _ ->
+        lists:keyreplace(deps, 1, CONFIG, {deps, [{cowboy,"2.8.0"}, {jiffy,"1.1.1"}]});
+    _ -> % OTP24 and higher
+        lists:keyreplace(deps, 1, CONFIG, {deps, [{cowboy,"2.9.0"}, {jiffy,"1.1.1"}]})
+end.
